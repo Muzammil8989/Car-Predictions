@@ -26,39 +26,7 @@ except Exception as e:
     st.error(f"Failed to load model: {str(e)}")
     st.stop()
 
-# Custom CSS for modern styling
-# Custom CSS for clean, functional styling
-st.markdown("""
-<style>
-    .main {background-color: #f5f5f5;}
-    h1 {color: #2a3f5f;}
-    .st-bw {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        margin: 15px 0;
-    }
-    /* Simplified dropdown styling */
-    .stSelectbox [data-testid='stMarkdownContainer'] {
-        color: #2a3f5f;
-        font-weight: 500;
-    }
-    .stSelectbox div[role='button'] {
-        background: white;
-        border: 1px solid #2a3f5f;
-    }
-    .stSelectbox [data-testid='stMarkdownContainer'] p {
-        margin: 2px 0;
-    }
-    .stButton>button {
-        background: #2a3f5f !important;
-        color: white !important;
-        border-radius: 8px;
-        padding: 10px 24px;
-    }
-</style>
-""", unsafe_allow_html=True)
+
 
 # Create input fields
 st.title('🚗 Smart Car Price Predictor')
