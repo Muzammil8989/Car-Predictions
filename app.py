@@ -5,9 +5,13 @@ import streamlit as st
 import pandas as pd
 import pickle
 import datetime as dt
+import warnings
 
 # Load model
-model = pickle.load(open('car_price_model.pkl', 'rb'))
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    model = pickle.load(open('car_price_model.pkl', 'rb'))
+
 
 # Custom CSS for modern styling
 st.markdown("""

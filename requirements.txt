@@ -4,3 +4,4 @@ scikit-learn==1.4.0
 joblib==1.3.2
 python-dateutil==2.8.2
 pickle
+xgboost==1.7.6 
