@@ -138,6 +138,24 @@ def preprocess_input(input_df):
     
     return df
 
+def format_pkr(pkr):
+    """Formats PKR amount into lakh/crore notation with proper symbols"""
+    pkr_rounded = round(pkr, 2)
+    
+    # Crore formatting (>= 1 crore)
+    if pkr_rounded >= 10**7:  # 10,000,000 = 1 crore
+        crore_value = pkr_rounded / 10**7
+        return f"₨{crore_value:.2f} crore"
+    
+    # Lakh formatting (>= 1 lakh)
+    elif pkr_rounded >= 10**5:  # 100,000 = 1 lakh
+        lakh_value = pkr_rounded / 10**5
+        return f"₨{lakh_value:.2f} lakh"
+    
+    # Regular formatting for smaller amounts
+    else:
+        return f"₨{pkr_rounded:,.2f}"
+
 # Main app logic
 input_df = user_input_features()
 processed_df = preprocess_input(input_df)
@@ -146,8 +164,11 @@ if st.button('🚀 Get Price Prediction', use_container_width=True):
     try:
         prediction = model.predict(processed_df)
         usd_price = prediction[0]
-        pkr_price = usd_price / 0.0036  # Convert USD to PKR
         
+        # Convert to PKR using State Bank of Pakistan rate
+        EXCHANGE_RATE = 277.78  # PKR per 1 USD
+        pkr_price = usd_price * EXCHANGE_RATE
+
         st.markdown("---")
         st.markdown("### 📈 Prediction Results")
         
@@ -155,12 +176,14 @@ if st.button('🚀 Get Price Prediction', use_container_width=True):
         with col1:
             st.metric("Estimated Value (USD)", f"${usd_price:,.2f}")
         with col2:
-            st.metric("Estimated Value (PKR)", f"₨{pkr_price:,.2f}")
+            # Format PKR with lakh/crore notation
+            formatted_pkr = format_pkr(pkr_price)
+            st.metric("Estimated Value (PKR)", formatted_pkr)
             
-        st.caption("*Exchange rate: 1 USD = 277.78 PKR (as per State Bank of Pakistan)")
+        st.caption(f"*Exchange rate: 1 USD = {EXCHANGE_RATE} PKR (State Bank of Pakistan)")
 
     except Exception as e:
-        st.error(f'⚠️ Prediction Error: {str(e)}')
+        st.error(f"Error: {str(e)}")
 
 # To run the app:
 # streamlit run app.py
