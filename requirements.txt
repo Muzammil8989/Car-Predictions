@@ -1,4 +1,5 @@
-pandas
-scikit-learn
-python-dateutil
-pickle
+streamlit==1.32.0
+pandas==2.1.4
+scikit-learn==1.4.0
+joblib==1.3.2
+python-dateutil==2.8.2
