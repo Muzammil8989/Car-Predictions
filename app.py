@@ -3,11 +3,11 @@
 
 import streamlit as st
 import pandas as pd
-import joblib
+import pickle
 import datetime as dt
 
 # Load model
-model = joblib.load('car_price_model.pkl')
+model = pickle.load(open('car_price_model.pkl', 'rb'))
 
 # Custom CSS for modern styling
 st.markdown("""
